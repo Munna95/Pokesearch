@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Pokemon.sass";
+import "./Pokemon.scss";
 
 const pokemonBaseUrl = "https://pokeapi.co/api/v2/pokemon/";
 const pokemonBaseImgUrl =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
-let pokemonId = 1;
 
 function PokemonCard() {
-  const [pokemon, setPokemon] = useState([]);
-  const [pokemonImg, setPokemonImg] = useState([]);
+  const lastPokedexEntry = 897;
+  const [pokemon, setPokemon] = useState();
+  const [pokemonImg, setPokemonImg] = useState();
 
-  const handleClick = async () => {
+  function generateRandomId(max) {
+    return Math.floor(Math.random() * max) + 1;
+  }
+
+  const onPokemonSearchClick = async () => {
     try {
+      let pokemonId = generateRandomId(lastPokedexEntry);
       const response = await axios.get(pokemonBaseUrl + pokemonId);
       setPokemon(response.data);
       setPokemonImg(pokemonBaseImgUrl + pokemonId + ".png");
@@ -23,19 +28,22 @@ function PokemonCard() {
 
   return (
     <div className="pokemonCard">
-      <button className="button" onClick={handleClick}>
+      <button className="button" onClick={onPokemonSearchClick}>
         TEST
       </button>
-      <h2>
-        {pokemon.name}
-      </h2>
-      <img src={pokemonImg} className="artworkImg" alt=""></img>
-      <div className="infoCard">
-      <ul>
-        <li>Weight: {pokemon.weight}</li>
-        <li>Height: {pokemon.height}</li>
-      </ul>
-      </div>
+      {pokemon && (
+        <>
+          <h2>{pokemon.name}</h2>
+          <img src={pokemonImg} className="artworkImg" alt=""></img>
+          <div className="infoCard">
+            <ul>
+              <li>Weight: {pokemon.weight}</li>
+              <li>Height: {pokemon.height}</li>
+              <li></li>
+            </ul>
+          </div>
+        </>
+      )}
     </div>
   );
 }
