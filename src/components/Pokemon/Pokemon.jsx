@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Pokemon.css";
+import "./Pokemon.sass";
 
 const pokemonBaseUrl = "https://pokeapi.co/api/v2/pokemon/";
 const pokemonBaseImgUrl =
