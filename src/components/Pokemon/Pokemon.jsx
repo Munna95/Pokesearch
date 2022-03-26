@@ -28,11 +28,11 @@ function PokemonCard() {
 
   return (
     <div className="pokemonCard">
-      <button className="button" onClick={onPokemonSearchClick}>
-        TEST
-      </button>
       {pokemon && (
         <>
+          <div className="idTag">
+            #{pokemon.id}
+          </div>
           <h2>{pokemon.name}</h2>
           <img src={pokemonImg} className="artworkImg" alt=""></img>
           <div className="infoCard">
@@ -44,6 +44,9 @@ function PokemonCard() {
           </div>
         </>
       )}
+      <button className="button" onClick={onPokemonSearchClick}>
+        Random
+      </button>
     </div>
   );
 }
