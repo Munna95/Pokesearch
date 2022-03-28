@@ -1,11 +1,12 @@
 .App-header {
   width: 100vw;
   height: 65px;
-  background-color: #8C0909;
+  background-color: #be0b0b;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 2em 0 2em;
 }
 // .Search-container
 //     display: flex

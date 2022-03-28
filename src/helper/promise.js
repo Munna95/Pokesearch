@@ -1,9 +1,3 @@
-export default (promise)=>{
-    promise()
-    .then(data=>[data,null])
-    .catch(err=>[null,err])
+export default function promiseHelper(promise) {
+  return promise.then((data) => [data]).catch((err) => [null, err]);
 }
-
-
-
-
