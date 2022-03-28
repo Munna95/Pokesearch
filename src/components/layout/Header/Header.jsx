@@ -15,6 +15,7 @@ function Header() {
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
       </div> */}
+
       <nav className="Nav">
         <Link to="/">Home</Link>
         <Link to="/pokemon-info">Random pokemon</Link>

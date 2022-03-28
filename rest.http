@@ -1,0 +1,7 @@
+### GET POKEMON
+GET https://pokeapi.co/api/v2/pokemon/1
+
+### GET POKEMON SPECIES
+GET https://pokeapi.co/api/v2/pokemon-species/1/
+
+GET https://pokeapi.co/api/v2/language/en/
