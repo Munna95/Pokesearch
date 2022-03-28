@@ -17,7 +17,9 @@ function Header() {
       </div> */}
 
       <nav className="Nav">
-        <Link to="/">Home</Link>
+        <Link to="/" className="homeLink">
+          PokéSearch
+        </Link>
       </nav>
     </header>
   );

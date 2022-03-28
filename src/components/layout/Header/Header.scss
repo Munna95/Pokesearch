@@ -1,12 +1,14 @@
 .App-header {
+  height: 4em;
   width: 100vw;
-  height: 65px;
+  top: 0;
   background-color: #be0b0b;
+  position: fixed;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2em 0 2em;
+  padding: 0 1.5em 0 1.5em;
 }
 // .Search-container
 //     display: flex
@@ -41,4 +43,17 @@
 }
 .fa-magnifying-glass {
   padding-right: 5px;
+}
+
+.homeLink {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.3rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .App-header {
+    padding: 0 1.714em 0 1.714em;
+  }
 }

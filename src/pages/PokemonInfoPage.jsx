@@ -15,30 +15,30 @@ function PokemonCard() {
   const urlParams = new URLSearchParams(queryString);
   const pokemonId = parseInt(urlParams.get("id")) + 1;
 
+  const getPokemon = async () => {
+    const promises = [
+      axios.get(`${baseUrl}pokemon/${pokemonId}`),
+      axios.get(`${baseUrl}pokemon-species/${pokemonId}`),
+      axios.get(`${baseUrl}language/`)
+    ];
+    const [_pokemon, _species] = await Promise.all(promises);
+
+    let pokemonDescription = _species.data.flavor_text_entries.filter(
+      (flavor) => flavor.language.name === "en"
+    );
+
+    setPokemon({
+      ..._pokemon.data,
+      ..._species.data,
+      description: pokemonDescription[pokemonDescription.length - 1].flavor_text
+    });
+
+    setPokemonImg(baseImgUrl + pokemonId + ".png");
+  };
+
   useEffect(() => {
-    const fetchPokemon = async () => {
-      const promises = [
-        axios.get(`${baseUrl}pokemon/${pokemonId}`),
-        axios.get(`${baseUrl}pokemon-species/${pokemonId}`),
-        axios.get(`${baseUrl}language/`)
-      ];
-      const [_pokemon, _species] = await Promise.all(promises);
-
-      let pokemonDescription = _species.data.flavor_text_entries.filter(
-        (flavor) => flavor.language.name === "en"
-      );
-
-      setPokemon({
-        ..._pokemon.data,
-        ..._species.data,
-        description:
-          pokemonDescription[pokemonDescription.length - 1].flavor_text
-      });
-
-      setPokemonImg(baseImgUrl + pokemonId + ".png");
-    };
-    fetchPokemon();
-  }, []);
+    getPokemon();
+  });
 
   return (
     <div className="pokemonCard">

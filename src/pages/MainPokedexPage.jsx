@@ -9,17 +9,16 @@ function MainPokedexPage() {
     const _pokedex = await axios.get(
       `https://pokeapi.co/api/v2/pokemon?offset=0&limit=898`
     );
-
     setPokedex(_pokedex.data.results);
   };
 
   useEffect(() => {
     getPokedex();
   }, []);
-
+  console.log(pokedex);
   return (
     <div className="home">
-      <title>Welcome to PokéSearch</title>
+      <h1>Welcome to PokéSearch</h1>
       <div className="pokedex">
         <ul className="pokemonList">
           {pokedex &&
