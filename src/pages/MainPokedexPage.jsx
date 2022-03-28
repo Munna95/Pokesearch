@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../components/Pokemon/PokemonList.scss";
 
 function MainPokedexPage() {
   const [pokedex, setPokedex] = useState([]);
@@ -20,17 +21,21 @@ function MainPokedexPage() {
     <div className="home">
       <title>Welcome to PokéSearch</title>
       <div className="pokedex">
-        <ul>
+        <ul className="pokemonList">
           {pokedex &&
             pokedex.map((pokemon, id) => (
-              <li>
-                <a href={`http://localhost:3000/pokemon-info?id=${id}`}>
+              <li className="listElement">
+                <a
+                  href={`http://localhost:3000/pokemon-info?id=${id}`}
+                  className="pokemonLink"
+                >
                   {pokemon.name}
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${
                       id + 1
                     }.png`}
                     alt=""
+                    className="pokemonImg"
                   />
                 </a>
               </li>
