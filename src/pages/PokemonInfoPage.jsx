@@ -1,87 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../components/Pokemon/Pokemon.scss";
-import promiseHelper from "../helper/promise";
+//import promiseHelper from "../helper/promise";
 
 const baseUrl = "https://pokeapi.co/api/v2/";
-const pokemonBaseImgUrl =
+const baseImgUrl =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 
 function PokemonCard() {
-  const lastPokedexEntry = 897;
   const [pokemon, setPokemon] = useState();
   const [pokemonImg, setPokemonImg] = useState();
-  const [language, setLanguageList] = useState();
 
-  function generateRandomId(max) {
-    return Math.floor(Math.random() * max) + 1;
-  }
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const pokemonId = parseInt(urlParams.get("id")) + 1;
 
-  const onPokemonSearchClick = async () => {
-    let pokemonId = generateRandomId(lastPokedexEntry);
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      const promises = [
+        axios.get(`${baseUrl}pokemon/${pokemonId}`),
+        axios.get(`${baseUrl}pokemon-species/${pokemonId}`),
+        axios.get(`${baseUrl}language/`)
+      ];
+      const [_pokemon, _species] = await Promise.all(promises);
 
-    const promises = [
-      axios.get(`${baseUrl}pokemon/${pokemonId}`),
-      axios.get(`${baseUrl}pokemon-species/${pokemonId}`),
-      axios.get(`${baseUrl}language/`)
-    ];
+      let pokemonDescription = _species.data.flavor_text_entries.filter(
+        (flavor) => flavor.language.name === "en"
+      );
 
-    const [_pokemon, _species, _languages] = await Promise.all(promises);
+      setPokemon({
+        ..._pokemon.data,
+        ..._species.data,
+        description:
+          pokemonDescription[pokemonDescription.length - 1].flavor_text
+      });
 
-    /*     const [_pokemon, pokemonErr] = await promiseHelper(
-      axios.get(`${baseUrl}pokemon/${pokemonId}`)
-    );
-    if (pokemonErr) {
-      console.error("Cannot get Pokemon data");
-      return;
-    }
-
-    const [_species, speciesErr] = await promiseHelper(
-      axios.get(`${baseUrl}pokemon-species/${pokemonId}`)
-    );
-    if (speciesErr) {
-      console.error("Cannot get species data");
-      return;
-    }
-
-    const [_languages, languagesErr] = await promiseHelper(
-      axios.get(`${baseUrl}language/`)
-    );
-    if (languagesErr) {
-      console.error("Cannot get language");
-      return;
-    } */
-
-    setLanguageList(_languages.data);
-
-    let pokemonDescription = _species.data.flavor_text_entries.filter(
-      (flavor) => flavor.language.name === "en"
-    );
-
-    setPokemon({
-      ..._pokemon.data,
-      ..._species.data,
-      description: pokemonDescription[pokemonDescription.length - 1].flavor_text
-    });
-
-    setPokemonImg(pokemonBaseImgUrl + pokemonId + ".png");
-    console.log(pokemon);
-    /*try {
-      let pokemonId = generateRandomId(lastPokedexEntry);
-      const response = await axios.get(pokemonBaseUrl + pokemonId);
-      setPokemon(response.data);
-      setPokemonImg(pokemonBaseImgUrl + pokemonId + ".png");
-    } catch (error) {
-      console.error("Te salio mal");
-    }
-  };
-
-  const myPromise = () => {
-    return new Promise((resolve, reject) => {
-      if (nro % 2 == 0) resolve(true);
-      else reject(false);
-    });*/
-  };
+      setPokemonImg(baseImgUrl + pokemonId + ".png");
+    };
+    fetchPokemon();
+  }, []);
 
   return (
     <div className="pokemonCard">
@@ -103,9 +60,6 @@ function PokemonCard() {
           </div>
         </>
       )}
-      <button className="button" onClick={onPokemonSearchClick}>
-        Random
-      </button>
     </div>
   );
 }
@@ -133,3 +87,43 @@ export default PokemonCard;
   };
 
 */
+
+/*try {
+      let pokemonId = generateRandomId(lastPokedexEntry);
+      const response = await axios.get(pokemonBaseUrl + pokemonId);
+      setPokemon(response.data);
+      setPokemonImg(pokemonBaseImgUrl + pokemonId + ".png");
+    } catch (error) {
+      console.error("Te salio mal");
+    }
+  };
+
+  const myPromise = () => {
+    return new Promise((resolve, reject) => {
+      if (nro % 2 == 0) resolve(true);
+      else reject(false);
+    });*/
+
+/*     const [_pokemon, pokemonErr] = await promiseHelper(
+      axios.get(`${baseUrl}pokemon/${pokemonId}`)
+    );
+    if (pokemonErr) {
+      console.error("Cannot get Pokemon data");
+      return;
+    }
+
+    const [_species, speciesErr] = await promiseHelper(
+      axios.get(`${baseUrl}pokemon-species/${pokemonId}`)
+    );
+    if (speciesErr) {
+      console.error("Cannot get species data");
+      return;
+    }
+
+    const [_languages, languagesErr] = await promiseHelper(
+      axios.get(`${baseUrl}language/`)
+    );
+    if (languagesErr) {
+      console.error("Cannot get language");
+      return;
+    } */

@@ -6,7 +6,7 @@ function MainPokedexPage() {
 
   const getPokedex = async () => {
     const _pokedex = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1126`
+      `https://pokeapi.co/api/v2/pokemon?offset=0&limit=898`
     );
 
     setPokedex(_pokedex.data.results);
@@ -18,7 +18,7 @@ function MainPokedexPage() {
 
   return (
     <div className="home">
-      <title>Wellcome to pokesearch</title>
+      <title>Welcome to PokéSearch</title>
       <div className="pokedex">
         <ul>
           {pokedex &&

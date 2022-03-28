@@ -18,7 +18,6 @@ function Header() {
 
       <nav className="Nav">
         <Link to="/">Home</Link>
-        <Link to="/pokemon-info">Random pokemon</Link>
       </nav>
     </header>
   );
